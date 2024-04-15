@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    int t;
+    cin >> t;
+    while(t--) {
+        int k, q;
+        cin >> k >> q;
+        vector<int> a(k);
+        for(int i=0; i<k; i++)
+            cin >> a[i];
+        while(q--) {
+            int n;
+            cin >> n;
+            vector<int> players(n);
+            iota(players.begin(), players.end(), 1);
+            while(true) {
+                vector<int> kicked;
+                for(int i : a) {
+                    if(i <= players.size())
+                        kicked.push_back(i);
+                }
+                if(kicked.empty())
+                    break;
+                for(int i=kicked.size()-1; i>=0; i--)
+                    players.erase(players.begin() + kicked[i] - 1);
+            }
+            cout << players.size() << " ";
+        }
+        cout << "\n";
+    }
+    return 0;
+}
