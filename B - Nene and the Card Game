@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+
+using namespace std;
+
+vector<int> max_points(int t, vector<pair<int, vector<int>>>& tests) {
+  vector<int> results;
+  for (int i = 0; i < t; ++i) {
+
+    vector<int>& cards = tests[i].second;
+
+    unordered_map<int, int> map;
+    for (int card : cards) {
+      map[card]++;
+    }
+
+    unordered_set<int> table;
+    int your_score = 0;
+    for (int card : cards) {
+      if (map[card] > 0) {
+        map[card]--;
+        if (table.find(card) != table.end()) {
+          your_score++;
+        } else {
+          table.insert(card);
+        }
+      }
+    }
+
+    results.push_back(your_score);
+  }
+  return results;
+}
+
+int main() {
+  int t;
+  cin >> t;
+
+  vector<pair<int, vector<int>>> tests;
+  for (int i = 0; i < t; ++i) {
+    int n;
+    cin >> n;
+    vector<int> cards(n);
+    for (int j = 0; j < n; ++j) {
+      cin >> cards[j];
+    }
+    tests.push_back({n, cards});
+  }
+
+  vector<int> results = max_points(t, tests);
+
+  for (int result : results) {
+    cout << result << endl;
+  }
+
+  return 0;
+}
+
